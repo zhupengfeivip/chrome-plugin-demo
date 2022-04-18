@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>popup页</title>
-	<meta charset="utf-8"/>
+	<title>新闻编辑助手</title>
+	<meta charset="utf-8" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style>
-	body {
-		font-family: 'Microsoft Yahei';
-		width: 500px;
-		min-height: 100px;
-	}
-	a {margin-right: 10px;}
+		body {
+			font-family: 'Microsoft Yahei';
+			width: 500px;
+			min-height: 100px;
+		}
+
+		a {
+			margin-right: 10px;
+		}
 	</style>
 </head>
-<body>
-	<h1>pageAction演示</h1>
-	<p>打开百度pageAction会点亮，打开其它页面pageAction会变灰。</p>
+
+<br>
+<h1>常用系统</h1>
+<div>
+	<a href="#" id="open_main_page">网站首页</a>
+	<a href="#" id="open_forum">论坛首页</a>
+	<a href="#" id="open_cms">CMS</a>
+	<a href="#" id="open_sa">超级后台</a>
+</div>
+<h1>时间</h1>
+<span>北京时间：</span><br />
+<span>多伦多时间：</span><br />
+<h1>常用工具</h1>
+<div>
+	<button id="test">TEST!</button>
+	<a href="#" id="update_bg_color">修改页面背景色(通过executeScript实现)</a>
+</div>
+<div id='message'>Injecting Script....</div>
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
 </body>
+
 </html>

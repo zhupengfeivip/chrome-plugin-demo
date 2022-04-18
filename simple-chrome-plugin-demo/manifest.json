@@ -1,28 +1,26 @@
 {
 	"manifest_version": 2,
-	"name": "Chrome插件demo",
+	"name": "约克新闻采集",
 	"version": "1.0",
-	"description": "最简单的Chrome插件demo，需要快速做一个简单的插件时可以基于这个仓库开发",
-	"author": "sxei",
-	"icons":
-	{
+	"description": "约克新闻采集，快速采集新闻到CMS系统，请先提前登录CMS系统。",
+	"author": "zhupengfei",
+	"icons": {
 		"48": "icon.png",
 		"128": "icon.png"
 	},
-	"browser_action": 
-	{
+	"browser_action": {
 		"default_icon": "icon.png",
 		"default_popup": "popup.html"
 	},
-	"content_scripts": 
-	[
-		{
-			"matches": ["https://www.baidu.com/*"],
-			"js": ["content-script.js"]
-		}
+	"content_scripts": [{
+		"matches": ["https://www.baidu.com/*"],
+		"js": ["content-script.js"]
+	}],
+	// 权限申请
+	"permissions": [
+		"contextMenus" // 右键菜单
 	],
-	"web_accessible_resources": 
-	[
+	"web_accessible_resources": [
 		"inject.js"
 	]
 }
