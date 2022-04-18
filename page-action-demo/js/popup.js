@@ -215,6 +215,30 @@ $('#update_bg_color').click(() => {
 	executeScriptToCurrentTab('document.body.style.backgroundColor="red";')
 });
 
+// // 获取选择html
+// $('#btnGetHtml').click(() => {
+// 	console.log('btnGetHtml')
+// 	chrome.browserAction.onClicked.addListener(function (tab) {
+// 		chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function (response) {
+
+// 			var url = response.url;
+// 			var subject = response.subject;
+// 			var body = response.body;
+// 			console.log(url, subject, body)
+// 			if (body == '') {
+// 				body = "No text selected";
+// 				//You may choose to pop up a text box allowing the user to enter in a message instead.
+// 			}
+
+// 			//From here, you can POST the variables to any web service you choose.
+
+// 			alert(body)
+
+
+// 		});
+// 	});
+// });
+
 // 修改字体大小
 $('#update_font_size').click(() => {
 	sendMessageToContentScript({ cmd: 'update_font_size', size: 42 }, function (response) { });
