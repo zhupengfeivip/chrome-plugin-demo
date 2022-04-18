@@ -215,29 +215,53 @@ $('#update_bg_color').click(() => {
 	executeScriptToCurrentTab('document.body.style.backgroundColor="red";')
 });
 
-// // 获取选择html
-// $('#btnGetHtml').click(() => {
-// 	console.log('btnGetHtml')
-// 	chrome.browserAction.onClicked.addListener(function (tab) {
-// 		chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function (response) {
+// 获取选择html
+$('#btnGetHtml').click(() => {
+	alert('btnGetHtml')
+	console.log('btnGetHtml')
+	getCurrentTabId((tabId) => {
+		chrome.tabs.sendRequest(tabId, { method: "getSelection" }, function (response) {
+			var url = response.url;
+			var subject = response.subject;
+			var body = response.body;
+			console.log(url, subject, body)
+			if (body == '') {
+				body = "No text selected";
+				//You may choose to pop up a text box allowing the user to enter in a message instead.
+			}
 
-// 			var url = response.url;
-// 			var subject = response.subject;
-// 			var body = response.body;
-// 			console.log(url, subject, body)
-// 			if (body == '') {
-// 				body = "No text selected";
-// 				//You may choose to pop up a text box allowing the user to enter in a message instead.
-// 			}
+			//From here, you can POST the variables to any web service you choose.
+			// chrome.cookies.set({ url: "http://yorktest.xyz/", name: "collectNews", value: body, expirationDate: new Date().getTime() + 3600 });
+			// alert(body)
+			// document.execCommand("Copy")
+			copyTextToClipboard(body)
+		});
+	});
 
-// 			//From here, you can POST the variables to any web service you choose.
+});
 
-// 			alert(body)
+function copyTextToClipboard(text) {
+	var copyFrom = $('<textarea/>');
+	copyFrom.text(text);
+	$('body').append(copyFrom);
+	copyFrom.select();
+	document.execCommand('copy');
+	copyFrom.remove();
+}
 
+$('#btnGetCookies').click(() => {
+	getCookies("http://yorktest.xyz/", "collectNews", function (id) {
+		alert(id);
+	});
+});
 
-// 		});
-// 	});
-// });
+function getCookies(domain, name, callback) {
+	chrome.cookies.get({ "url": domain, "name": name }, function (cookie) {
+		if (callback) {
+			callback(cookie.value);
+		}
+	});
+}
 
 // 修改字体大小
 $('#update_font_size').click(() => {
