@@ -28,15 +28,15 @@ chrome.contextMenus.create({
 	contexts: ['selection'], // 只有当选中文字时才会出现此右键菜单
 	onclick: function (params) {
 		// alert(params)
-		console.log('selection', params)
+		// console.log('selection', params)
 		// Save data to storage locally, in just this browser...
-		chrome.storage.local.set({ "yorkcms": params.selectionText }, function () {
-			//  Data's been saved boys and girls, go on home
-			console.log('save success')
-		})
+		// chrome.storage.local.set({ "yorkcms": params.selectionText }, function () {
+		// 	//  Data's been saved boys and girls, go on home
+		// 	console.log('save success')
+		// })
 		// 注意不能使用location.href，因为location是属于background的window对象
 		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&url=' + encodeURI(tab.url) });
-		chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&from=storage' })
+		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&from=storage' })
 	}
 })
 

@@ -217,8 +217,8 @@ $('#update_bg_color').click(() => {
 
 // 获取选择html
 $('#btnGetHtml').click(() => {
-	alert('btnGetHtml')
-	console.log('btnGetHtml')
+	// alert('btnGetHtml')
+	// console.log('btnGetHtml')
 	getCurrentTabId((tabId) => {
 		chrome.tabs.sendRequest(tabId, { method: "getSelection" }, function (response) {
 			var url = response.url;
@@ -232,9 +232,13 @@ $('#btnGetHtml').click(() => {
 
 			//From here, you can POST the variables to any web service you choose.
 			// chrome.cookies.set({ url: "http://yorktest.xyz/", name: "collectNews", value: body, expirationDate: new Date().getTime() + 3600 });
+			// alert(url)
+			// alert(subject)
 			// alert(body)
 			// document.execCommand("Copy")
-			copyTextToClipboard(body)
+			var copyJson = { title: subject, url: url, html: body }
+			copyTextToClipboard(JSON.stringify(copyJson))
+			chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
 		});
 	});
 

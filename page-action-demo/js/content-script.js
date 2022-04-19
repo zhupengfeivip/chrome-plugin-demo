@@ -15,15 +15,15 @@ document.addEventListener('DOMContentLoaded', function () {
         // for (var i = 0; i < objs.length; i++) {
         //     objs[i].setAttribute('_target', 'blank');
         // }
-        var keywords = "";
-        chrome.storage.local.get('yorkcms', function (result) {
-            keywords = result.yorkcms;
-            console.log(result);
-            var para = document.createElement("p")
-            para.innerText = keywords
-            document.getElementById('app').appendChild(para)
-        });
-        console.log('已处理yorkbbs');
+        // var keywords = "";
+        // chrome.storage.local.get('yorkcms', function (result) {
+        //     keywords = result.yorkcms;
+        // console.log(result);
+        // var para = document.createElement("p")
+        // para.innerText = keywords
+        // document.getElementById('app').appendChild(para)
+        // });
+        // console.log('已处理yorkbbs');
         // alert('aaa')
     }
 
