@@ -239,9 +239,8 @@ $('#btnGetHtml').click(() => {
 			var copyJson = { title: subject, url: url, html: body }
 			copyTextToClipboard(JSON.stringify(copyJson))
 			chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
-		});
-	});
-
+		})
+	})
 });
 
 function copyTextToClipboard(text) {

@@ -23,6 +23,22 @@ chrome.contextMenus.create({
 	}
 })
 
+// 获取当前选项卡ID
+function getCurrentTabId(callback) {
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+		if (callback) callback(tabs.length ? tabs[0].id : null);
+	});
+}
+
+function copyTextToClipboard(text) {
+	var copyFrom = $('<textarea/>');
+	copyFrom.text(text);
+	$('body').append(copyFrom);
+	copyFrom.select();
+	document.execCommand('copy');
+	copyFrom.remove();
+}
+
 chrome.contextMenus.create({
 	title: '保存选中内容', // %s表示选中的文字
 	contexts: ['selection'], // 只有当选中文字时才会出现此右键菜单
@@ -37,6 +53,28 @@ chrome.contextMenus.create({
 		// 注意不能使用location.href，因为location是属于background的window对象
 		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&url=' + encodeURI(tab.url) });
 		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&from=storage' })
+		getCurrentTabId((tabId) => {
+			chrome.tabs.sendRequest(tabId, { method: "getSelection" }, function (response) {
+				var url = response.url;
+				var subject = response.subject;
+				var body = response.body;
+				console.log(url, subject, body)
+				if (body == '') {
+					body = "No text selected";
+					//You may choose to pop up a text box allowing the user to enter in a message instead.
+				}
+
+				//From here, you can POST the variables to any web service you choose.
+				// chrome.cookies.set({ url: "http://yorktest.xyz/", name: "collectNews", value: body, expirationDate: new Date().getTime() + 3600 });
+				// alert(url)
+				// alert(subject)
+				// alert(body)
+				// document.execCommand("Copy")
+				var copyJson = { title: subject, url: url, html: body }
+				copyTextToClipboard(JSON.stringify(copyJson))
+				chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
+			})
+		})
 	}
 })
 
