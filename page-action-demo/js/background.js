@@ -1,3 +1,4 @@
+console.log('这是background.js');
 // chrome.runtime.onInstalled.addListener(function () {
 // 	chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
 // 		chrome.declarativeContent.onPageChanged.addRules([
@@ -44,6 +45,7 @@ chrome.contextMenus.create({
 	contexts: ['selection'], // 只有当选中文字时才会出现此右键菜单
 	onclick: function (params) {
 		// alert(params)
+		console.log('保存选中内容 click')
 		// console.log('selection', params)
 		// Save data to storage locally, in just this browser...
 		// chrome.storage.local.set({ "yorkcms": params.selectionText }, function () {
@@ -54,10 +56,16 @@ chrome.contextMenus.create({
 		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&url=' + encodeURI(tab.url) });
 		// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?&from=storage' })
 		getCurrentTabId((tabId) => {
+			// var successful = document.execCommand('copy');
+			// var msg = successful ? 'successful' : 'unsuccessful';
+			// console.log('Copy email command was ' + msg);
+			// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?clipboard=1' })
+
 			chrome.tabs.sendRequest(tabId, { method: "getSelection" }, function (response) {
-				var url = response.url;
-				var subject = response.subject;
-				var body = response.body;
+				console.log('2222')
+				var url = response.url
+				var subject = response.subject
+				var body = response.body
 				console.log(url, subject, body)
 				if (body == '') {
 					body = "No text selected";
@@ -71,12 +79,30 @@ chrome.contextMenus.create({
 				// alert(body)
 				// document.execCommand("Copy")
 				var copyJson = { title: subject, url: url, html: body }
-				copyTextToClipboard(JSON.stringify(copyJson))
+				var text = JSON.stringify(copyJson)
+				if (url.indexOf('51.ca') >= 0) {
+					text = replaceAll(text, '/uploads/Image/', 'https://info.51.ca/uploads/Image/')
+				}
+				copyTextToClipboard(text)
+				// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?clipboard=1' })
 				chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
+				// console.log('4444');
+				// document.execCommand("paste")
+				// setTimeout(function () { console.log('33333'); document.execCommand("paste"); }, 5000)
 			})
 		})
 	}
 })
+
+/**
+ * 替换所有
+ * @param str
+ * @param find
+ * @param replace
+ */
+function replaceAll(str, find, replace) {
+	return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace)
+}
 
 chrome.browserAction.onClicked.addListener(function (tab) {
 	chrome.tabs.sendRequest(tab.id, { method: "getSelection" }, function (response) {

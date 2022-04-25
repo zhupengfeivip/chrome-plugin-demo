@@ -4,7 +4,7 @@
 	// 插件的名称
 	"name": "yorkbbs编辑助手",
 	// 插件的版本
-	"version": "1.0.1",
+	"version": "1.0.2",
 	// 插件描述
 	"description": "内部工具,请用员工账号提前登录CMS系统。",
 	// 图标，一般偷懒全部用一个尺寸的也没问题
@@ -27,12 +27,18 @@
 	// 	"default_popup": "popup.html"
 	// },
 	// 需要直接注入页面的JS
-	"content_scripts": [{
-			"matches": ["http://*/*", "https://*/*"],
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
 			// "<all_urls>" 表示匹配所有地址
 			// "matches": ["<all_urls>"],
 			// 多个JS按顺序注入
-			"js": ["js/content-script.js"],
+			"js": [
+				"js/content-script.js"
+			],
 			// "js": ["js/jquery-1.8.3.js", "js/content-script.js"],
 			// JS的注入可以随便一点，但是CSS的注意就要千万小心了，因为一不小心就可能影响全局样式
 			// "css": ["css/custom.css"],
@@ -69,6 +75,9 @@
 		"chrome_style": true
 	},
 	"background": {
-		"scripts": ["js/jquery-1.8.3.js", "js/background.js"]
+		"scripts": [
+			"js/jquery-1.8.3.js",
+			"js/background.js"
+		]
 	}
 }
