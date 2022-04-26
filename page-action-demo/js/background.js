@@ -1,4 +1,4 @@
-console.log('这是background.js');
+// console.log('这是background.js');
 // chrome.runtime.onInstalled.addListener(function () {
 // 	chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
 // 		chrome.declarativeContent.onPageChanged.addRules([
@@ -62,7 +62,7 @@ chrome.contextMenus.create({
 			// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?clipboard=1' })
 
 			chrome.tabs.sendRequest(tabId, { method: "getSelection" }, function (response) {
-				console.log('2222')
+				// console.log('2222')
 				var url = response.url
 				var subject = response.subject
 				var body = response.body
@@ -84,8 +84,8 @@ chrome.contextMenus.create({
 					text = replaceAll(text, '/uploads/Image/', 'https://info.51.ca/uploads/Image/')
 				}
 				copyTextToClipboard(text)
-				// chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?clipboard=1' })
-				chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
+				chrome.tabs.create({ url: 'https://cms.yorkbbs.ca/publish/post?clipboard=1' })
+				// chrome.tabs.create({ url: 'http://localhost:8080/publish/post?clipboard=1' })
 				// console.log('4444');
 				// document.execCommand("paste")
 				// setTimeout(function () { console.log('33333'); document.execCommand("paste"); }, 5000)
